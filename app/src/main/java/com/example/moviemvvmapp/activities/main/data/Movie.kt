@@ -3,7 +3,6 @@ package com.example.moviemvvmapp.activities.main.data
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data class MovieCollection(@SerialName(value = "page") val page: Int, @SerialName(value = "results") val movies: ArrayList<Movie>) {
 

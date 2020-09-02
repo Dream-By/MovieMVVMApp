@@ -1,8 +1,8 @@
 package com.example.moviemvvmapp.backend
 
+import com.example.moviemvvmapp.activities.main.data.MovieCollection
 import retrofit2.http.GET
 import retrofit2.http.Query
-import com.example.moviemvvmapp.activities.main.data.MovieCollection
 
 
 interface ServiceUtil {

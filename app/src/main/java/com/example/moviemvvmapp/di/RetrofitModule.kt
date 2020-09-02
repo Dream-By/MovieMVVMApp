@@ -53,7 +53,7 @@ private fun cacheFile(context: Context) = File(context.filesDir, "my_own_created
 
 private fun cache(cacheFile: File) = Cache(cacheFile, CACHE_FILE_SIZE)
 
-@OptIn(UnstableDefault::class)
+@UseExperimental(UnstableDefault::class)
 private fun retrofit(callFactory: Call.Factory, baseUrl: String) = Retrofit.Builder()
     .callFactory(callFactory)
     .baseUrl(baseUrl)

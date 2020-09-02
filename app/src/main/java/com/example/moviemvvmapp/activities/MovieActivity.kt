@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class MovieActivity : AppCompatActivity() {
 
     private val movieViewModel: MovieViewModel by viewModel()
@@ -48,3 +49,4 @@ class MovieActivity : AppCompatActivity() {
         })
     }
 }
+

@@ -11,7 +11,7 @@ import com.example.moviemvvmapp.util.Constants
 import com.example.moviemvvmapp.util.Event
 import kotlinx.coroutines.launch
 
-class MovieViewModel constructor(private val serviceUtil : ServiceUtil) : ViewModel() {
+class MovieViewModel constructor(private val serviceUtil: ServiceUtil) : ViewModel() {
 
     private val _uiState = MutableLiveData<MovieDataState>()
     val uiState: LiveData<MovieDataState> get() = _uiState
@@ -20,12 +20,11 @@ class MovieViewModel constructor(private val serviceUtil : ServiceUtil) : ViewMo
         retrieveMovies()
     }
 
-    private fun retrieveMovies(){
+    private fun retrieveMovies() {
         viewModelScope.launch {
-            kotlin.runCatching {
+            runCatching {
                 emitUiState(showProgress = true)
-                //serviceUtil.popularMovies(apiKey = Constants.API_KEY)
-                serviceUtil.popularMovies(Constants.API_KEY)
+                serviceUtil.popularMovies(apiKey = Constants.API_KEY)
             }.onSuccess {
                 emitUiState(movies = Event(it.movies))
             }.onFailure {
@@ -34,13 +33,19 @@ class MovieViewModel constructor(private val serviceUtil : ServiceUtil) : ViewMo
             }
         }
     }
-    private fun emitUiState(showProgress:Boolean = false,
-                            movies: Event<List<MovieCollection.Movie>>? = null,
-                            error: Event<Int>? = null){
-        val dataState = MovieDataState(showProgress,movies,error)
+
+    private fun emitUiState(
+        showProgress: Boolean = false,
+        movies: Event<List<MovieCollection.Movie>>? = null,
+        error: Event<Int>? = null
+    ) {
+        val dataState = MovieDataState(showProgress, movies, error)
         _uiState.value = dataState
     }
-
-    data class MovieDataState(val showProgress: Boolean, val movies: Event<List<MovieCollection.Movie>>?, val error: Event<Int>?)
-
 }
+
+data class MovieDataState(
+    val showProgress: Boolean,
+    val movies: Event<List<MovieCollection.Movie>>?,
+    val error: Event<Int>?
+)
