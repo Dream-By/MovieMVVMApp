@@ -15,7 +15,6 @@ val picassoModule = module {
     }
 }
 
-
 private fun okHttp3Downloader(callFactory: Call.Factory) = OkHttp3Downloader(callFactory)
 
 private fun picasso(context: Context, downloader: OkHttp3Downloader) = Picasso.Builder(context)

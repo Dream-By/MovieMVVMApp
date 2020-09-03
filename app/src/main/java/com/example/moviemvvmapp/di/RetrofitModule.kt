@@ -5,9 +5,8 @@ import com.example.moviemvvmapp.BuildConfig
 import com.example.moviemvvmapp.backend.ServiceUtil
 import com.example.moviemvvmapp.util.Constants
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.UnstableDefault
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
 import okhttp3.Cache
 import okhttp3.Call
 import okhttp3.Interceptor
@@ -18,7 +17,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import java.io.File
-
 
 private const val CACHE_FILE_SIZE: Long = 30 * 1000 * 1000 // 30 Mib
 val retrofitModule = module {
@@ -53,14 +51,15 @@ private fun cacheFile(context: Context) = File(context.filesDir, "my_own_created
 
 private fun cache(cacheFile: File) = Cache(cacheFile, CACHE_FILE_SIZE)
 
-@UseExperimental(UnstableDefault::class)
+@OptIn(ExperimentalSerializationApi::class)
 private fun retrofit(callFactory: Call.Factory, baseUrl: String) = Retrofit.Builder()
     .callFactory(callFactory)
     .baseUrl(baseUrl)
     .addConverterFactory(
-        Json(
-            JsonConfiguration(strictMode = false)
-        ).asConverterFactory("application/json".toMediaType())
+        Json {
+            this.ignoreUnknownKeys = true
+            isLenient = true
+        }.asConverterFactory("application/json".toMediaType())
     )
     .build()
 
